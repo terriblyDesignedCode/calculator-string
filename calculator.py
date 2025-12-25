@@ -1318,8 +1318,8 @@ def key_calc(key, just_from_added_win=False):
                     example_value = insert_in_example(example_value, ')', right=True)
                 elif symbol_left_from_cursor() == '√':
                     example_value = insert_in_example(example_value, '3/')
-                elif symbol_left_from_cursor() in '•^':
-                    example_value = insert_in_example(example_value, f'({('1', '2')[symbol_left_from_cursor() == '•']}/')
+                elif symbol_left_from_cursor() == '^':
+                    example_value = insert_in_example(example_value, f'(1/')
                     example_value = insert_in_example(example_value, ')', right=True)
                 else:
                     example_value = insert_in_example(example_value, '1/')
@@ -1339,7 +1339,7 @@ def key_calc(key, just_from_added_win=False):
         elif keysym == 'numbersign':
             example_value = insert_in_example(example_value, '#')
         elif keysym.isdigit():
-            if re.search(r'(?:[^0-9\.]|^)0$', example_value):
+            if re.search(r'(?:[^0-9\.]|^)0', example_value):
                 example_value = insert_in_example(example_value, f'.{keysym}')
             else:
                 example_value = insert_in_example(example_value, f'{'/' if symbol_left_from_cursor() in 'π' else '•' if symbol_left_from_cursor() in 'φe)!' else ''}{keysym}')
@@ -1934,7 +1934,7 @@ def paste_text(*key):
             replaced_paste = replaced_paste.replace('#', '')
             replaced_paste = re.sub(r'(\d)√', r'\1•√', replaced_paste)
     if not re.search(r'[а-яА-ЯЁё]', replaced_paste):
-        replaced_paste = replaced_paste.replace('x', '•').replace('*', '•').replace('inf', 'ထ').replace('∞', 'ထ').replace('–', '-').replace('–', '-').replace('×', '•').replace(' ', ' ')
+        replaced_paste = replaced_paste.replace('x', '•').replace('*', '•').replace('inf', 'ထ').replace('∞', 'ထ').replace('–', '-').replace('–', '-').replace('×', '•').replace('−', '-').replace('⋅', '•').replace(' ', ' ')
     change_text(replaced_paste)
     
 def change_text(pasted, start=None, end=None):
