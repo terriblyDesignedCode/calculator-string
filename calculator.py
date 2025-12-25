@@ -1339,7 +1339,7 @@ def key_calc(key, just_from_added_win=False):
         elif keysym == 'numbersign':
             example_value = insert_in_example(example_value, '#')
         elif keysym.isdigit():
-            if re.search(r'(?:[^0-9\.]|^)0', example_value):
+            if re.search(r'(?:[^0-9\.]|^)0$', example_value[:cursor_index]):
                 example_value = insert_in_example(example_value, f'.{keysym}')
             else:
                 example_value = insert_in_example(example_value, f'{'/' if symbol_left_from_cursor() in 'π' else '•' if symbol_left_from_cursor() in 'φe)!' else ''}{keysym}')
