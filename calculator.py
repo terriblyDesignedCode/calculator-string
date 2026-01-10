@@ -361,7 +361,7 @@ def solve_example(example=None):
         info_if_continue_rounding = f" ({info_if_rounding})"
         if re.fullmatch(r'-?', example[example.index('q') + 1:cursor_or_selected_end_index]):
             ROUND_ANSWER_TO_MANUALLY = settings['round'] = 'по умолчанию'
-            return f'{f'{q_solve_example(example)} ' * (not recents['rounding info longer'] > 0)}[округление по умолчанию{f'{q_solve_example(example)} ' * (not recents['rounding info longer'] > 0)}{info_if_start_rounding * (recents['rounding info longer'] > 0)}]'
+            return f'{f'{q_solve_example(example)} ' * (not recents['rounding info longer'] > 0)}[округление по умолчанию{info_if_start_rounding * (recents['rounding info longer'] > 0)}]'
 
         rounding_num = re.fullmatch(r'-?\d+', example[example.index('q') + 1:cursor_or_selected_end_index])
         if not rounding_num:
