@@ -771,8 +771,6 @@ def disable_editing_added_win_text(key):
             pyperclip.copy(selected_text)
         elif keysym == 'v':
             paste_text()
-        elif keysym == 's':
-            save_example_to_history()
         elif keysym == 'BackSpace':
             ctrl_backspace(key)
         elif keysym == 'Delete':
@@ -808,6 +806,8 @@ def added_win_control_keypress(event):
         manage_not_main_window_close()
     elif keysym == 'a':
         text_entry.tag_add(SEL, '1.0', 'end-1c')
+    elif keysym == 's':
+        save_example_to_history()
     elif keysym == 'slash':
         create_added_win('?')
     elif keysym == 'h':
@@ -904,7 +904,7 @@ def finish_to_help_win():
     text_entry.delete(1.0, END)
     for i in range(len(splitted_text_entry)):
         val = splitted_text_entry[i] + '\n'
-        tag_rows = (2,) + (10, 12, 12, 9, 8, 9)
+        tag_rows = (2,) + (10, 12, 12, 10, 8, 9)
         indexes_of_description = tuple(sum(tag_rows[:i]) for i in range(1, 7))
         weight = ('normal', 'bold')[i in indexes_of_description]
         val = '✓' * (weight == 'bold') + val
@@ -1481,6 +1481,7 @@ def real_key_calc(key, just_from_added_win=False):
 def save_example_to_history(*key):
     global history_of_calculations, i_history, i_last_example, added_win, settings, example_value, cursor_index, can_backspace, indexes_of_selection, keyboard_layout_memory
     indexes_of_selection = None
+    print('s')
     perfect_ex_for_ans = recents['recent examples'][-1][2]
     for i in range(2):
         for j in range(-3, 0):
@@ -1513,8 +1514,7 @@ def save_example_to_history(*key):
                 recents['last examples'].pop(0)
             if len(recents['recent examples']) > 20:
                 recents['recent examples'].pop(0)
-            
-            if history_input and added_win.title() in ('история', invisible_win_title):
+            if history_input and added_win.title() in ('инструкция', 'история', invisible_win_title):
                 i_last_example = 'future'
                 i_history = 'future'
                 date_time = str(datetime.datetime.today())[:-7].replace('-', '.')
@@ -1524,7 +1524,7 @@ def save_example_to_history(*key):
                 
                 too_much_history_data = len(split0_history_of_calculations) > settings['history length']
                 history_of_calculations = '\n'.join(split0_history_of_calculations if not too_much_history_data else split0_history_of_calculations[:settings['history length']])
-                if added_win.title() != invisible_win_title:
+                if added_win.title() not in (invisible_win_title, 'инструкция'):
                     try:
                         theme_is_light = settings['theme'] == 'light'
                         color1 = ('#' + 'b0' * 3, '#' + '2f' * 3)[theme_is_light]
