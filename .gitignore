@@ -1,6 +1,4 @@
-.idea
-dist
 _internal
-калькулятор.exe
-node_modules
 __pycache__
+
+калькулятор.exe

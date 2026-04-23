@@ -835,16 +835,24 @@ def create_added_win(win_type):
     added_win.title(('история', 'инструкция')[is_help])
     
     added_win.geometry(f'{WIDTH - 10}x{MAX_COORD - 100}+{X_COORD}+0')
-    added_win.resizable(width=False, height=False)
+    added_win.resizable(width=True, height=True)
     
     added_win.focus_set()
     added_win.protocol('WM_DELETE_WINDOW', lambda: manage_not_main_window_close())
-    added_win.attributes('-alpha', '0.975')
+    added_win.attributes('-alpha', ('0.8', '0.975')[is_help])
     
     text_entry = Text(added_win, bg=('#' + '10' * 3, '#' + 'e9' * 3)[settings['theme'] == 'light'], fg=entry_box.cget('fg'), font=('Arial', int(HEIGHT // (2.3, 2)[is_help]), 'bold'))
-    text_entry.place(x=2, y=2, width=WIDTH - 30, height=MAX_COORD - 104)
+    text_entry.place(x=2, y=2, width=WIDTH - 26, height=MAX_COORD - 104)
     
+    scrollbar_style = ttk.Style()
+    scrollbar_style.theme_use('clam')
+    i = not theme_is_light
+    scrollbar_style.configure('App.Vertical.TScrollbar', background=("#dcdcdc", "#3a3a3a")[i], troughcolor=("#ffffff", "#1f1f1f")[i],
+                              arrowcolor=("#222222", "#dddddd")[i], relief="flat")
+    scrollbar_style.map('App.Vertical.TScrollbar', background=[("active", ("#cfcfcf", "#4a4a4a")[i]), ("pressed", ("#bdbdbd", "#5a5a5a")[i])])
+
     scrollbar_history_calc = ttk.Scrollbar(added_win, orient='vertical', command=text_entry.yview)
+    scrollbar_history_calc.configure(style='App.Vertical.TScrollbar')
     scrollbar_history_calc.pack(side=RIGHT, fill=Y)
     text_entry['yscrollcommand'] = scrollbar_history_calc.set
     
