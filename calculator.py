@@ -836,6 +836,7 @@ def create_added_win(win_type):
     
     added_win.geometry(f'{WIDTH - 10}x{MAX_COORD - 100}+{X_COORD}+0')
     added_win.resizable(width=True, height=True)
+    added_win.maxsize(10 ** 6, MAX_COORD - 100)
     
     added_win.focus_set()
     added_win.protocol('WM_DELETE_WINDOW', lambda: manage_not_main_window_close())
@@ -843,6 +844,7 @@ def create_added_win(win_type):
     
     text_entry = Text(added_win, bg=('#' + '10' * 3, '#' + 'e9' * 3)[settings['theme'] == 'light'], fg=entry_box.cget('fg'), font=('Arial', int(HEIGHT // (2.3, 2)[is_help]), 'bold'))
     text_entry.place(x=2, y=2, width=WIDTH - 26, height=MAX_COORD - 104)
+    added_win.bind("<Configure>", lambda: text_entry.place(x=2, y=2, width=WIDTH - 26, height=MAX_COORD - 104))
     
     scrollbar_style = ttk.Style()
     scrollbar_style.theme_use('clam')
