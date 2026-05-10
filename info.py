@@ -20,6 +20,9 @@ temp_scopes, temp_scopes_with_smth = r'(?:\(-?\)|U-?u)', r'(?:\(.*?\)|U.*?u)'
 calc_geometry_state_change_expression = r'Максимум \d+ символ(?:|а|ов)|Калькулятор теперь (?:вверху|в центре|внизу)'
 pattern_checking_on_empty_scopes = fr'(?:[+\-/•:^√]|mod|div)*(?:(?:sin|cos|tg|ctg|lg|ln){temp_scopes}|log{temp_scopes}by{temp_scopes_with_smth}|log{temp_scopes_with_smth}by{temp_scopes}|{temp_scopes})'
 
+def reunite(words):
+    return [f'{(r'\s*').join(['\\' + symb if symb in '()|' else symb for symb in word])}' for word in words]
+
 united_symbols = ('log', 'div', 'mod', 'sin', 'cos', 'ctg') + ('ln', 'lg', 'tg', 'by')
 united_symbols_with_scopes = ('log(', 'sin(', 'cos(', 'ctg(', ')by(') + ('ln(', 'lg(', 'tg(') + ('log|', 'sin|', 'cos|', 'ctg|', '|by|', '|by(', ')by|') + ('ln|', 'lg|', 'tg|')
 united_symbols_without_scopes = ('sin', 'cos', 'tg', 'ctg', 'ln', 'lg')
